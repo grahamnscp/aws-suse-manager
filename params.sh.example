@@ -1,0 +1,16 @@
+#!/bin/bash
+
+
+SCC_SUSE_MICRO_SUB=mysusemicrosub
+SCC_SUSE_MANAGER_SUB=mysusemgrsub
+
+SCC_ORG_NAME=mysccorgname
+SCC_ORG_EMAIL_ADDRESS=mysccorgemail
+
+SCC_ORG_USER=mysccorgcredentialuser
+SCC_ORG_PASSWORD=mysccorgcredentialpwd
+
+SUSE_MANAGER_5_DOMAIN=mydomain.net
+SUSE_MANAGER_5_ADMIN_EMAIL=myemailaddress
+SUSE_MANAGER_5_ADMIN_PWD=myadminpwd
+SUSE_MANAGER_5_HOST_PWD="hostuserpassword"
