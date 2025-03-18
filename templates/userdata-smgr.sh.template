@@ -134,9 +134,6 @@ _EOFCONFIG_
 chmod 0644 /etc/systemd/system/suse-mgr-config.service
 systemctl enable suse-mgr-config.service
 
-# disable selinux?
-sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
-setenforce 0
 
 # done
 echo "Configured with combustion at boot" >> /etc/issue.d/combustion

@@ -7,7 +7,7 @@ SCC_SUSE_MANAGER_SUB=mysusemgrsub
 SCC_ORG_NAME=mysccorgname
 SCC_ORG_EMAIL_ADDRESS=mysccorgemail
 
-SCC_ORG_USER=mysccorgcredentialuser
+SCC_ORG_USER=mysccorgcredentialuserid
 SCC_ORG_PASSWORD=mysccorgcredentialpwd
 
 SUSE_MANAGER_5_DOMAIN=mydomain.net
