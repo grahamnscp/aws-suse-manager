@@ -26,7 +26,8 @@ resource "aws_instance" "smgr" {
   vpc_security_group_ids = ["${aws_security_group.dc-instance-sg.id}"]
   subnet_id = "${aws_subnet.dc-subnet1.id}"
 
-  user_data = "${file("userdata-smgr.sh")}"
+  #user_data = "${file("userdata-smgr.sh")}"
+  user_data = "${file(lookup(local.smgr_ud_map, "smgr-ud${count.index}", "userdata-smgr1.sh"))}"
 
   count = "${var.node_count_smgr}"
 

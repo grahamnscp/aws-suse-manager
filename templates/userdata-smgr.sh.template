@@ -19,19 +19,23 @@ echo "alias vi=vim"         >> /root/.bashrc
 echo "set background=dark"  >> /root/.vimrc
 
 # register suse micro system and add suse manager 5 extension
-transactional-update register -r ##SCC_SUSE_MICRO_SUB## -e ##SCC_ORG_EMAIL_ADDRESS##
-transactional-update --quiet register --list-extensions
+echo userdata: Running transactional-update register suse-micro sub..
+transactional-update --continue register -r ##SCC_SUSE_MICRO_SUB## -e ##SCC_ORG_EMAIL_ADDRESS##
+transactional-update --continue --quiet register --list-extensions
 
-transactional-update register -p SUSE-Manager-Server/5.0/x86_64 -r ##SCC_SUSE_MANAGER_SUB##
-transactional-update --quiet register --list-extensions
-zypper --non-interactive repos
+echo userdata: Running transactional-update register suse-manager sub..
+transactional-update --continue register -p SUSE-Manager-Server/5.0/x86_64 -r ##SCC_SUSE_MANAGER_SUB##
+transactional-update --continue --quiet register --list-extensions
+#zypper --non-interactive repos
 
 # install packages
-transactional-update --non-interactive pkg install podman 
+echo userdata: Running transactional-update pkg install..
+transactional-update --continue --non-interactive pkg install podman jq
 
 # transactional manager timer
-systemctl enable --now transactional-update.timer
+transactional-update --continue systemctl enable --now transactional-update.timer
 
+echo userdata: Creating mgradm config file..
 # create mgradm config file:
 cat > /root/mgradm.yaml << _EOFMDMCONF_
 tz: GMT
@@ -63,56 +67,88 @@ admin:
   email: ##SUSE_MANAGER_5_ADMIN_EMAIL##
 _EOFMDMCONF_
 
+echo userdata: Creating suse-mgr-config service script..
 # create a systemd script for first boot
 cat > /root/bin/suse-mgr-config.sh << _EOFSCRIPT_ 
 #!/bin/bash
-touch /root/.suse-mgr-config-started
 
-echo "Running suse-mgr-config.sh"
-
-PODMAN=\`rpm -qa | grep podman | wc -l\`
-if [ \$PODMAN -eq 1 ] ; then
-  echo podman installed: \$PODMAN
-else
-  echo podman: \$PODMAN - installing..
-  transactional-update --non-interactive pkg install podman
+if [ ! -e /root/.suse-mgr-config-started ] ; then
+  touch /root/.suse-mgr-config-started
 fi
 
-# mkdir for storage
-echo Creating storage volumes directory..
-mkdir -p /var/lib/containers/storage/volumes
+echo "suse-mgr-config: Started.."
 
-# install suse mgr host os packages
-transactional-update register -r ##SCC_SUSE_MICRO_SUB## -e ##SCC_ORG_EMAIL_ADDRESS##
-transactional-update --quiet register --list-extensions
-transactional-update register -p SUSE-Manager-Server/5.0/x86_64 -r ##SCC_SUSE_MANAGER_SUB##
-#
-transactional-update --non-interactive pkg install uyuni-storage-setup-server mgradm
+# smgr pre-install config
+if [ ! -e /root/.suse-mgr-config-reboot1  ] ; then
 
-# define storage to external disk volume
-echo Running mgr-storage-server..
-mgr-storage-server /dev/nvme1n1
+  echo suse-mgr-config: Creating storage volumes directory..
+  transactional-update --continue run mkdir -p /var/lib/containers/storage/volumes
 
-# install suse manager
-echo Running mgradm install..
-mgradm -c /root/mgradm.yaml install podman smgr.##SUSE_MANAGER_5_DOMAIN##
+  echo suse-mgr-config: Running transactional-update pkg install..
+  transactional-update --continue --non-interactive pkg install uyuni-storage-setup-server mgradm
 
-# test for mgradm package install, allow to run twice if not configured
-MGRADM=\`rpm -qa | grep mgradm | wc -l\`
-if [ \$MGRADM -eq 1 ] ; then
-  touch /root/.suse-mgr-config-ran
-  echo "suse-mgr-config.sh done, rebooting"
+  # define storage to external disk volume
+  echo suse-mgr-config: Running mgr-storage-server..
+  transactional-update --continue run /usr/bin/mgr-storage-server /dev/nvme1n1
+
+
+  # finished pre install config
+  touch /root/.suse-mgr-config-reboot1
+  echo "suse-mgr-config: reboot before mgradm install.."
+
   systemctl reboot
 fi
 
-echo To access susemgr pod use: mgrctl term
 
-echo "suse-mgr-config.sh done"
+# smgr install
+if [ ! -e /root/.suse-mgr-config-reboot2  ] ; then
+  # install suse manager
+  echo suse-mgr-config: Running mgradm install..
+  /usr/bin/mgradm -c /root/mgradm.yaml install podman smgrX.##SUSE_MANAGER_5_DOMAIN##
+
+  echo suse-mgr-config: Sleeping post mgradm install..
+  sleep 300
+
+  touch /root/.suse-mgr-config-reboot2
+  echo "suse-mgr-config: reboot after mgradm install.."
+
+  systemctl reboot
+fi
+
+
+# check smgr up
+echo suse-mgr-config: Checking podman instance up..
+SMGRUP=\`podman ps | egrep -v ID | wc -l\`
+if [ \$SMGRUP -eq 1 ]
+then
+  echo "suse-mgr-config: SUSE Manager is running."
+  touch /root/.suse-mgr-config-ran
+
+else
+  echo "suse-mgr-config: post mgradm install, running inspect.."
+  /usr/bin/mgradm -c /root/mgradm.yaml inspect
+  /usr/bin/mgradm start
+
+  echo suse-mgr-config: Sleeping post mgradm start..
+  sleep 300
+  touch /root/.suse-mgr-config-ran
+fi
+
+# CLI:
+#  mgradm status
+#  mgrctl term
+
+#echo "suse-mgr-config done, rebooting.."
+#touch /root/.suse-mgr-config-reboot.$$
+
+echo "suse-mgr-config: Done, exiting.."
+systemctl reboot
 exit 0
 
 _EOFSCRIPT_
 chmod 0755 /root/bin/suse-mgr-config.sh
 
+echo userdata: Creating suse-mgr-config systemd service definition..
 cat <<- _EOFCONFIG_ > /etc/systemd/system/suse-mgr-config.service
 [Unit]
 Description=SUSE Manager Config Service
@@ -123,7 +159,7 @@ ConditionPathExists=!/root/.suse-mgr-config-ran
 
 [Service]
 Type=forking
-TimeoutStartSec=120
+TimeoutStartSec=900
 ExecStart=/root/bin/suse-mgr-config.sh
 RemainAfterExit=yes
 KillMode=process
@@ -134,11 +170,15 @@ _EOFCONFIG_
 chmod 0644 /etc/systemd/system/suse-mgr-config.service
 systemctl enable suse-mgr-config.service
 
+# selinux - disable for now, need to semanage port access..
+sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
+setenforce 0
+
 
 # done
 echo "Configured with combustion at boot" >> /etc/issue.d/combustion
 echo "" >> /etc/issue.d/combustion
 
-echo "==========> Exiting combustion config script and rebooting.."
+echo "userdata: ==========> Exiting combustion config script and rebooting.."
 systemctl reboot
 exit 0

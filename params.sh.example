@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 SCC_SUSE_MICRO_SUB=mysusemicrosub
 SCC_SUSE_MANAGER_SUB=mysusemgrsub
 

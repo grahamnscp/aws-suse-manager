@@ -41,6 +41,15 @@ sed -i $SEDBAK "s/##SUSE_MANAGER_5_ADMIN_PWD##/$SUSE_MANAGER_5_ADMIN_PWD/" $USER
 sed -i $SEDBAK "s/##SUSE_MANAGER_5_DOMAIN##/$SUSE_MANAGER_5_DOMAIN/" $USERDATA_DEST
 sed -i $SEDBAK "s/##SUSE_MANAGER_5_HOST_PWD##/$SUSE_MANAGER_5_HOST_PWD/" $USERDATA_DEST
 
+# smgrX
+SMGR_COUNT=`grep count_smgr tf/terraform.tfvars | awk '{print $3}' | tr -d '"'`
+for i in $(seq 1 $SMGR_COUNT);
+do
+  cp $USERDATA_DEST tf/userdata-smgr$i.sh
+  sed -i $SEDBAK "s/smgrX/smgr$i/" tf/userdata-smgr$i.sh
+  rm tf/userdata-smgr$i.sh.bak
+done
+rm $USERDATA_DEST
 
 USERDATA_CLIENT_DEST=tf/userdata-client.sh
 cp templates/userdata-client.sh.template $USERDATA_CLIENT_DEST

@@ -15,6 +15,9 @@ output "smgr-instance-public-ips" {
 output "smgr-instance-names" {
   value = ["${aws_route53_record.smgr.*.name}"]
 }
+output "smgr-instance-cnames" {
+  value = ["${aws_route53_record.smgr-alias.*.name}"]
+}
 
 # Instances - suse manager clients
 output "client-instance-private-ips" {

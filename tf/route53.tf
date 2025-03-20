@@ -10,13 +10,15 @@ resource "aws_route53_record" "smgr" {
   records = ["${element(aws_eip.smgr-eip.*.public_ip, count.index)}"]
 }
 
-# alias for suse manager ui
+# alias for suse manager ui (for multiple nodes need to add different name in userdata)
+#   mgradm -c /root/mgradm.yaml install podman smgrX.##SUSE_MANAGER_5_DOMAIN##
 resource "aws_route53_record" "smgr-alias" {
   zone_id = "${var.route53_zone_id}"
-  name = "smgr.${var.route53_subdomain}.${var.route53_domain}"
+  count = "${var.node_count_smgr}"
+  name = "smgr${count.index + 1}.${var.route53_subdomain}.${var.route53_domain}"
   type = "CNAME"
   ttl = "60"
-  records = [aws_route53_record.smgr.0.name]
+  records = ["${element(aws_route53_record.smgr.*.name, count.index)}"]
 }
 
 # Client instances
