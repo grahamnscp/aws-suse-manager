@@ -41,7 +41,7 @@ SUSE_MANAGER_5_HOST_PWD="hostuserpassword"
 
 ## Deployment steps
 - cp params.sh.example params.sh and edit
-- set node node_count_x values in tf/terraform.tfvars also set your own values for other data, route53 zone etc
+- set node node_count_x values in tf/terraform.tfvars also set your own values for other data, route53 zone etc (see tf/terraform.tfvars.example)
 - run ./parse-userdata-template.sh to generate tf/userdata-*.sh files
 - cd tf ; terraform plan
 - terraform apply -auto-approve
@@ -127,6 +127,7 @@ notice the time between "started" and final "ran" flag file creation.
   
 ## Destroy / Teardown 
 cd tf ; terraform destroy -auto-approve
+cd .. ; ./clean.sh
   
 
 
