@@ -24,7 +24,6 @@ The values for the generated mgradm.yaml are pulled from variables defined in pa
 ```
 #!/bin/bash
 
-
 SCC_SUSE_MICRO_SUB=mysusemicrosub
 SCC_SUSE_MANAGER_SUB=mysusemgrsub
 
