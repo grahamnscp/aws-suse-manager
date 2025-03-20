@@ -30,7 +30,7 @@ transactional-update --continue --quiet register --list-extensions
 
 # install packages
 echo userdata: Running transactional-update pkg install..
-transactional-update --continue --non-interactive pkg install podman jq
+transactional-update --continue --non-interactive pkg install podman jq mlocate policycoreutils-python-utils
 
 # transactional manager timer
 transactional-update --continue systemctl enable --now transactional-update.timer
@@ -123,6 +123,7 @@ if [ \$SMGRUP -eq 1 ]
 then
   echo "suse-mgr-config: SUSE Manager is running."
   touch /root/.suse-mgr-config-ran
+  updatedb
 
 else
   echo "suse-mgr-config: post mgradm install, running inspect.."
@@ -170,10 +171,9 @@ _EOFCONFIG_
 chmod 0644 /etc/systemd/system/suse-mgr-config.service
 systemctl enable suse-mgr-config.service
 
-# selinux - disable for now, need to semanage port access..
-sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
-setenforce 0
-
+# selinux 
+#sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
+#setenforce 0
 
 # done
 echo "Configured with combustion at boot" >> /etc/issue.d/combustion
