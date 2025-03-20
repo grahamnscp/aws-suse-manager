@@ -125,8 +125,8 @@ notice the time between "started" and final "ran" flag file creation.
 
 ![smgr-create-org](./assets/initial-suse-mgr-create-org-screen.png)
   
-
-## Remove
+  
+## Destroy / Teardown 
 cd tf ; terraform destroy -auto-approve
   
 
