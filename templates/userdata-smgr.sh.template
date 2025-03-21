@@ -133,6 +133,7 @@ else
   echo suse-mgr-config: Sleeping post mgradm start..
   sleep 300
   touch /root/.suse-mgr-config-ran
+  rm /root/mgradm.yaml
 fi
 
 # CLI:
