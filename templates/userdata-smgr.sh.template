@@ -123,6 +123,7 @@ if [ \$SMGRUP -eq 1 ]
 then
   echo "suse-mgr-config: SUSE Manager is running."
   touch /root/.suse-mgr-config-ran
+  rm /root/mgradm.yaml
   updatedb
 
 else
