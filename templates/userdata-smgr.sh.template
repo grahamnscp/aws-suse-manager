@@ -33,7 +33,7 @@ echo userdata: Running transactional-update pkg install..
 transactional-update --continue --non-interactive pkg install podman jq mlocate policycoreutils-python-utils
 
 # transactional manager timer
-transactional-update --continue systemctl enable --now transactional-update.timer
+#transactional-update --continue systemctl enable --now transactional-update.timer
 
 echo userdata: Creating mgradm config file..
 # create mgradm config file:
