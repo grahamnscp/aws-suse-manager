@@ -56,6 +56,7 @@ scc:
 organization: ##SCC_ORG_NAME##
 
 # Email address sending the notifications
+email: ##SUSE_MANAGER_5_ADMIN_EMAIL##
 emailFrom: ##SUSE_MANAGER_5_ADMIN_EMAIL##
 
 # Administrators account details
@@ -63,7 +64,7 @@ admin:
   password: ##SUSE_MANAGER_5_ADMIN_PWD##
   login: admin
   firstName: Admin
-  lastName: Admin
+  lastName: User
   email: ##SUSE_MANAGER_5_ADMIN_EMAIL##
 _EOFMDMCONF_
 
