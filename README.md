@@ -120,9 +120,9 @@ Thu 20 Mar 2025 15:45:15 GMT
 ```
 notice the time between "started" and final "ran" flag file creation.
 
-## Initial UI - Create local Org
+## UI - Config is done and admin user created
 
-![smgr-create-org](./assets/initial-suse-mgr-create-org-screen.png)
+![smgr-login](./assets/suse-mgr-login-screen.png)
   
   
 ## Destroy / Teardown 
