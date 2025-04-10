@@ -70,6 +70,17 @@ variable "volume_size_root_client" {
   type = string
 }
 
+# instances - client2:
+variable "aws_instance_type_client2" {
+  type = string
+}
+variable "aws_ami_client2" {
+  type = string
+}
+variable "node_count_client2" {
+  type = string
+}
+
 # ssh keyname:
 variable "aws_key_name" {
   type = string

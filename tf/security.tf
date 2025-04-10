@@ -44,8 +44,8 @@ resource "aws_security_group" "dc-instance-sg" {
     cidr_blocks = ["${var.ip_cidr_me}","${var.ip_cidr_work}"]
   }
 
-  # open 443 for public self
-  ## terraform cycle error:
+  # open web and salt ports for client systems, 443 on smgr needs to be open to public self
+  ## terraform cycle error :/
   #ingress {
   #  description = "HTTPS from public self"
   #  from_port = 443
@@ -60,6 +60,21 @@ resource "aws_security_group" "dc-instance-sg" {
     protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  ingress {
+    description = "HTTP from public"
+    from_port = 80
+    to_port = 80
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    description = "Salt Serveri from public"
+    from_port = 4505
+    to_port = 4506
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
 
   # egress out for all
   egress {

@@ -20,6 +20,7 @@ output "smgr-instance-cnames" {
 }
 
 # Instances - suse manager clients
+# sles
 output "client-instance-private-ips" {
   value = ["${aws_instance.client.*.private_ip}"]
 }
@@ -30,3 +31,13 @@ output "client-instance-names" {
   value = ["${aws_route53_record.client.*.name}"]
 }
 
+# slmicro
+output "client2-instance-private-ips" {
+  value = ["${aws_instance.client2.*.private_ip}"]
+}
+output "client2-instance-public-ips" {
+  value = ["${aws_eip.client2-eip.*.public_ip}"]
+}
+output "client2-instance-names" {
+  value = ["${aws_route53_record.client2.*.name}"]
+}

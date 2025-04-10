@@ -54,11 +54,37 @@ resource "aws_instance" "client" {
   vpc_security_group_ids = ["${aws_security_group.dc-instance-sg.id}"]
   subnet_id = "${aws_subnet.dc-subnet1.id}"
 
-  user_data = "${file("userdata-client.sh")}"
+  user_data = "${file("userdata-client-sles.sh")}"
 
   count = "${var.node_count_client}"
 
   tags = {
     Name = "${var.prefix}-client${count.index + 1}"
+  }
+}
+
+resource "aws_instance" "client2" {
+
+  instance_type = "${var.aws_instance_type_client2}"
+  ami           = "${var.aws_ami_client2}"
+  key_name      = "${var.aws_key_name}"
+
+  root_block_device {
+    volume_size = "${var.volume_size_root_client}"
+    volume_type = "gp2"
+    delete_on_termination = true
+  }
+
+  iam_instance_profile = "${aws_iam_instance_profile.suse_instance_profile.id}"
+
+  vpc_security_group_ids = ["${aws_security_group.dc-instance-sg.id}"]
+  subnet_id = "${aws_subnet.dc-subnet1.id}"
+
+  user_data = "${file("userdata-client-micro.sh")}"
+
+  count = "${var.node_count_client2}"
+
+  tags = {
+    Name = "${var.prefix}-client2-${count.index + 1}"
   }
 }

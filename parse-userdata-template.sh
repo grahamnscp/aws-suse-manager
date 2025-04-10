@@ -51,8 +51,12 @@ do
 done
 rm $USERDATA_DEST
 
-USERDATA_CLIENT_DEST=tf/userdata-client.sh
-cp templates/userdata-client.sh.template $USERDATA_CLIENT_DEST
+USERDATA_CLIENT_DEST=tf/userdata-client-sles.sh
+cp templates/userdata-client-sles.sh.template $USERDATA_CLIENT_DEST
+
+USERDATA_CLIENT2_DEST=tf/userdata-client-micro.sh
+cp templates/userdata-client-micro.sh.template $USERDATA_CLIENT2_DEST
+
 
 # tidy up
 rm ${USERDATA_DEST}.bak

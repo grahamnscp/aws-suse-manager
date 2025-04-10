@@ -24,17 +24,22 @@ route53_subdomain = "demo"
 # t3.2xlarge    8 vcpu - 32GB mem - $0.3341/hr
 aws_instance_type_smgr = "t3.2xlarge"
 aws_instance_type_client = "t3.small"
+aws_instance_type_client2 = "t3.small"
 
 # AWS EC2 ami
 # Active images: https://pint.suse.com/?resource=images&search=sles-15-sp6&csp=amazon&region=us-east-1&state=active
 # suse sle micro ami (suse-sle-micro-5-5-byos-v20241114-hvm-ssd-x86_64)
 aws_ami_smgr = "ami-0b55605194782e49d"
-# sles sp6 ami (amazon/suse-sles-15-sp6-v20241113-hvm-ssd-x86_64)
+
+# sles sp6 ami (suse-sles-15-sp6-v20241113-hvm-ssd-x86_64)
 aws_ami_client = "ami-0d9f9dbae7b9a241d"
+# suse sle micro ami (suse-sle-micro-6-1-byos-v20250210-hvm-ssd-x86_64)
+aws_ami_client2 = "ami-0312190f9576d68f7"
 
 # Number of instances
 node_count_smgr = "1"
-node_count_client = "2"
+node_count_client = "1"
+node_count_client2 = "1"
 
 # AWS EC2 instance volume sizes (in GB)
 volume_size_root = "100"
