@@ -2,7 +2,7 @@
 Terraform and scripts to show suse multi-linux manager deployment
 
 ## SUSE Multi-Linux Manager Lab
-This repo contains some terraform to create multiple lab instances of SUSE Multi-Linux Manager 5.x on SUSE Linux Micro AMIs along with a number of SLES instances for use as test clients.  
+This repo contains some terraform to create multiple lab instances of SUSE Multi-Linux Manager 5.5 on SUSE Linux Micro AMIs along with a number of SLES15.6 and SLM6.1 instances for use as test clients.  
 
 The number of smgr instances is adjusted using the count parameter in the tf/terraform.tfvars file.  
 
@@ -137,20 +137,20 @@ Thu 20 Mar 2025 15:45:15 GMT
 -rw-r--r--. 1 root root   0 Mar 20 15:39 .suse-mgr-config-ran
 ```
 notice the time between "started" and final "ran" flag file creation.
-
-
-## SUSE Repo sync
-A good repo to test with is SUSE Linux Micro 6.1  
-Takes about 15 minutes to pull down and storage size is around 6GB  
-
-
+  
+  
 ## UI - Config is done and admin user created
 
 ![smgr-login](./assets/suse-mgr-login-screen.png)
+  
+  
+## SUSE Repo sync
+A good repo to test with is SUSE Linux Micro 6.1  
+Takes about 15 minutes to pull down and storage size is around 6GB  
   
   
 ## Destroy / Teardown 
 cd tf ; terraform destroy -auto-approve
 cd .. ; ./clean.sh
   
-
+  
