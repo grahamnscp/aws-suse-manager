@@ -42,9 +42,9 @@ node_count_client = "1"
 node_count_client2 = "1"
 
 # AWS EC2 instance volume sizes (in GB)
-volume_size_root = "100"
-volume_size_data = "300"
-volume_size_root_client = "60"
+volume_size_root = "25"
+volume_size_data = "75"
+volume_size_root_client = "25"
 
 # Existing AWS SSH key-pair name - https://docs.aws.amazon.com/console/ec2/key-pairs
 aws_key_name = "myawskeypairname"

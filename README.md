@@ -14,7 +14,7 @@ When suse manager is installed a fqdn hostname is specified, the terraform creat
 
 SL Micro transational-update operations need some installs so a systemd script is created by the combusion step that runs after the first boot and performs smgr install steps, reboots etc  
 
-Some sleep timers have been inserted to allow the smgr install to initialise so need to wait 10-15 minutes for it to complete, look for /root/.suse-mgr-config-ran final flag file (that stops suse-mgr-config service from running again)  
+Some sleep timers have been inserted to allow the smgr install to initialise so need to wait ~25 minutes for it to complete, look for /root/.suse-mgr-config-ran final flag file (that stops suse-mgr-config service from running again)  
 
 ## Config parameters
 When installing the suse manager instance a config file is passed to the installer, this contains the SUSE SCC organisation that the instance is registered to along with the initial admin user details.
@@ -49,51 +49,62 @@ SUSE_MANAGER_5_HOST_PWD="hostuserpassword"
 ## Sample terraform output
 Test with node_count_smgr = "2":  
 ```
-Apply complete! Resources: 28 added, 0 changed, 0 destroyed.
+Apply complete! Resources: 27 added, 0 changed, 0 destroyed.
 
 Outputs:
 
 client-instance-names = [
   [
-    "gh-client1.demo.suselabs.net",
-    "gh-client2.demo.suselabs.net",
+    "gh-sles1.demo.suselabs.net",
   ],
 ]
 client-instance-private-ips = [
   [
-    "172.20.1.111",
-    "172.20.1.13",
+    "172.20.1.243",
   ],
 ]
 client-instance-public-ips = [
   [
-    "44.194.100.42",
-    "100.24.151.182",
+    "44.205.122.96",
+  ],
+]
+client2-instance-names = [
+  [
+    "gh-slm1.demo.suselabs.net",
+    "gh-slm2.demo.suselabs.net",
+  ],
+]
+client2-instance-private-ips = [
+  [
+    "172.20.1.221",
+    "172.20.1.183",
+  ],
+]
+client2-instance-public-ips = [
+  [
+    "54.165.110.98",
+    "52.45.118.107",
   ],
 ]
 domainname = "demo.suselabs.net"
 smgr-instance-cnames = [
   [
     "smgr1.demo.suselabs.net",
-    "smgr2.demo.suselabs.net",
   ],
 ]
 smgr-instance-names = [
   [
     "gh-smgr1.demo.suselabs.net",
-    "gh-smgr2.demo.suselabs.net",
   ],
 ]
 smgr-instance-private-ips = [
   [
-    "172.20.1.202",
-    "172.20.1.191",
+    "172.20.1.161",
   ],
 ]
 smgr-instance-public-ips = [
   [
-    "107.22.195.143",
-    "18.213.85.11",
+    "44.199.5.69",
   ],
 ]
 ```
