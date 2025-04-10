@@ -56,16 +56,19 @@ Outputs:
 client-instance-names = [
   [
     "gh-sles1.demo.suselabs.net",
+    "gh-sles2.demo.suselabs.net",
   ],
 ]
 client-instance-private-ips = [
   [
     "172.20.1.243",
+    "172.20.1.244",
   ],
 ]
 client-instance-public-ips = [
   [
     "44.205.122.96",
+    "44.205.122.97",
   ],
 ]
 client2-instance-names = [
@@ -90,21 +93,25 @@ domainname = "demo.suselabs.net"
 smgr-instance-cnames = [
   [
     "smgr1.demo.suselabs.net",
+    "smgr2.demo.suselabs.net",
   ],
 ]
 smgr-instance-names = [
   [
     "gh-smgr1.demo.suselabs.net",
+    "gh-smgr2.demo.suselabs.net",
   ],
 ]
 smgr-instance-private-ips = [
   [
     "172.20.1.161",
+    "172.20.1.163",
   ],
 ]
 smgr-instance-public-ips = [
   [
     "44.199.5.69",
+    "44.199.5.70",
   ],
 ]
 ```
