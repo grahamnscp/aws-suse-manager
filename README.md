@@ -138,6 +138,12 @@ Thu 20 Mar 2025 15:45:15 GMT
 ```
 notice the time between "started" and final "ran" flag file creation.
 
+
+## SUSE Repo sync
+A good repo to test with is SUSE Linux Micro 6.1  
+Takes about 15 minutes to pull down and storage size is around 6GB  
+
+
 ## UI - Config is done and admin user created
 
 ![smgr-login](./assets/suse-mgr-login-screen.png)
@@ -147,6 +153,4 @@ notice the time between "started" and final "ran" flag file creation.
 cd tf ; terraform destroy -auto-approve
 cd .. ; ./clean.sh
   
-
-
 
