@@ -67,8 +67,8 @@ client-instance-private-ips = [
 ]
 client-instance-public-ips = [
   [
+    "107.22.195.143",
     "44.205.122.96",
-    "44.205.122.97",
   ],
 ]
 client2-instance-names = [
@@ -120,11 +120,11 @@ Aliases:
 ```
 $ host smgr1.demo.suselabs.net
 smgr1.demo.suselabs.net is an alias for gh-smgr1.demo.suselabs.net.
-gh-smgr1.demo.suselabs.net has address 107.22.195.143
+gh-smgr1.demo.suselabs.net has address 44.199.5.69
 
 $ host smgr2.demo.suselabs.net
 smgr2.demo.suselabs.net is an alias for gh-smgr2.demo.suselabs.net.
-gh-smgr2.demo.suselabs.net has address 18.213.85.11
+gh-smgr2.demo.suselabs.net has address 44.199.5.70
 ```
 
 Test query to check on custom systemd install script progress:  
