@@ -1,0 +1,32 @@
+#!/bin/bash
+
+source ./utils/utils.sh
+
+LogStarted "=====================> Deploying suse multi-linux manager infra.."
+
+Log "===========> Generating terraform userdata files from templates.."
+./parse-userdata-template.sh
+LogElapsedDuration
+
+Log "===========> Provisioning infra via terraform.."
+cd tf
+terraform apply -auto-approve
+cd ..
+
+# --------------------------------------
+LogElapsedDuration
+LogCompleted "=====================> Done."
+
+echo  
+echo SUSE Manager Server instance userdata installs a custom systemd process
+echo called suse-mgr-config which performs various activites and reboots 
+echo a couple of times, this takes around 20 minutes to complete
+echo
+echo check for presence of /root/.suse-mgr-config-ran flag file that stops
+echo suse-mgr-config from running again on reboot
+echo
+
+./utils/spawn-sleep-timer.sh &
+
+# tidy up
+exit 0

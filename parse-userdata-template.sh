@@ -61,5 +61,6 @@ cp templates/userdata-client-micro.sh.template $USERDATA_CLIENT2_DEST
 # tidy up
 rm ${USERDATA_DEST}.bak
 #rm ${USERDATA_CLIENT_DEST}.bak
+#rm ${USERDATA_CLIENT2_DEST}.bak
 exit 0
 
